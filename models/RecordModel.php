@@ -6,6 +6,8 @@ use yii\db\ActiveRecord;
 
 class RecordModel extends ActiveRecord
 {
+    public $permitValue = null;
+
     public static function tableName()
     {
         return 'records';
@@ -14,7 +16,10 @@ class RecordModel extends ActiveRecord
     public function behaviors()
     {
         return [
-            OptimisticLockBehavior::class,
+            [
+                'class' => OptimisticLockBehavior::class,
+                'value' => $this->permitValue
+            ],
         ];
     }
 
@@ -28,6 +33,8 @@ class RecordModel extends ActiveRecord
         return [
             [ ['title', 'priority'], 'required'],
             [ ['title', 'priority'], 'trim'],
+            ['permitValue', 'safe'],
+            ['version', 'integer']
         ];
     }
 }

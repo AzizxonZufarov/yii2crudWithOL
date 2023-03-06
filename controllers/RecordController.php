@@ -6,6 +6,7 @@ use yii\db\StaleObjectException;
 
 class RecordController extends AppController
 {
+
     public function actionIndex()
     {
         $model = RecordModel::find()->orderBy(['priority' => SORT_DESC])->all();
@@ -60,13 +61,13 @@ class RecordController extends AppController
 
     public function actionDelete($id, $version)
     {
-        $model = RecordModel::findOne(['and', ['id' => $id], ['version' => $version]]);
         try {
-                $model->delete();
-                Yii::$app->session->setFlash('success', 'Successfully deleted!');
-                return $this->redirect('record/');
+            RecordModel::deleteAll(['id' => $id, 'version' => $version]);
+            Yii::$app->session->setFlash('success', 'Successfully deleted!');
+            return $this->redirect('/');
         }catch (StaleObjectException $e) {
-            $model = RecordModel::findOne(['and', ['id' => $id], ['version' => $version]]);
+            return var_dump('<pre>' . $e . '</pre>');die();
+            $model = RecordModel::findOne($model->id);
             Yii::$app->session->setFlash('error', 'Conflict,
                 item was changed by another user, your changes will be lost. Edit again or Cancel');
             return $this->render('edit', [

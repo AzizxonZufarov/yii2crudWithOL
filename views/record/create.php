@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <? $form = ActiveForm::begin();?>
-<?= $form->field($model, 'title')->label('Title');?>
+<?= $form->field($model, 'title')->textarea(['rows'=>5])->label('Title');?>
 <?= $form->field($model, 'priority')->label('Priority');?>
 <?= $form->field($model, 'done')->checkbox(['class' => 'mb-3 form-group'])?>
 <?= Html::activeHiddenInput($model, 'version');?>

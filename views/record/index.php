@@ -2,6 +2,7 @@
 <?php
 use yii\helpers\Html;
 ?>
+<?= \app\widgets\Alert::widget();?>
 <div class="jumbotron jumbotron-fluid text-center">
     <div class="container">
         <h1 class="display-4">Yii2 TODO application</h1>
